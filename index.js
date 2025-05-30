@@ -2,17 +2,20 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 require("dotenv").config()
+const path = require("pa")
+
 
 const app = express()
 
 app.use(express.json())
-app.use(cors({ origin: "http://localhost:5173", credentials: true }))
+app.use(express.static("dist"));
+app.use(cors({ origin: "https://omkar-yeske-portfolio.onrender.com", credentials: true }))
 
 app.use("/api/form", require("./form.route"))
 
 app.use("*", (req, res) => {
-    res.status(404).json({ message: "resource not found" })
-})
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 
 app.use((err, req, res, next) => {
